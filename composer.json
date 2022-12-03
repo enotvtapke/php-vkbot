@@ -3,6 +3,7 @@
   "description": "A vk bot to handle calendar events",
   "require": {
     "php": "^8.0",
+    "guzzlehttp/guzzle": "^7.5",
     "php-di/php-di": "^6.4",
     "vkcom/vk-php-sdk": "^5.101"
   },

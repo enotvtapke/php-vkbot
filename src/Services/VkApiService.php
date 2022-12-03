@@ -21,7 +21,7 @@ class VkApiService
     public function sendMessage(int $userId, string $message): void
     {
         $this->vkApi->messages()->send(
-            $this->config->get('accessToken'),
+            $this->config->get('vk')['accessToken'],
             ['peer_id' => $userId, 'user_id' => $userId, 'random_id' => mt_rand(), 'message' => $message]
         );
     }

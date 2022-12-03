@@ -1,0 +1,18 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:14.5
+    restart: always
+    environment:
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "admin"
+      POSTGRES_DB: "postgres"
+    ports:
+      - ${DB_PORT:-5432}:5432
+  event-service:
+    image: event-service
+    restart: always
+    ports:
+      - "8100:80"
+    environment:
+      DB_HOST: "postgres"
