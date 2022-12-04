@@ -10,7 +10,6 @@ use App\Utils\Config;
 use App\Utils\ConfigImpl;
 use DI\ContainerBuilder;
 use Monolog\Handler\StreamHandler;
-use Monolog\Level;
 use Monolog\Logger;
 use Monolog\Processor\UidProcessor;
 use Psr\Container\ContainerInterface;
@@ -32,7 +31,7 @@ return function (ContainerBuilder $containerBuilder) {
             'logger' => [
                 'name' => 'event-service',
                 'path' => 'php://stdout',
-                'level' => Level::Debug,
+                'level' => Logger::DEBUG,
             ],
         ]),
         LoggerInterface::class => function (ContainerInterface $c) {
