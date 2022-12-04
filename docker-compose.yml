@@ -10,7 +10,7 @@ services:
     ports:
       - ${DB_PORT:-5432}:5432
   event-service:
-    image: event-service
+    image: enotvtapke/personal:event-service
     restart: always
     ports:
       - "8100:80"
