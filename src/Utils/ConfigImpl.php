@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Utils;
 
+use InvalidArgumentException;
+
 class ConfigImpl implements Config
 {
     private array $settings;
@@ -18,6 +20,9 @@ class ConfigImpl implements Config
      */
     public function get(string $key = '')
     {
+        if ($this->settings[$key] === null) {
+            throw new InvalidArgumentException("Configuration value for $key is null");
+        }
         return (empty($key)) ? $this->settings : $this->settings[$key];
     }
 }

@@ -20,16 +20,16 @@ return function (ContainerBuilder $containerBuilder) {
     $containerBuilder->addDefinitions([
         Config::class => fn() => new ConfigImpl([
             'vk' => [
-                'accessToken' => getenv('VK_ACCESS_TOKEN'),
-                'groupId' => getenv('VK_GROUP_ID'),
-                'confirmationToken' => getenv('VK_CONFIRMATION_TOKEN'),
-                'secret' => getenv('VK_SECRET'),
+                'accessToken' => getenv('VK_ACCESS_TOKEN') ?: null,
+                'groupId' => getenv('VK_GROUP_ID') ?: null,
+                'confirmationToken' => getenv('VK_CONFIRMATION_TOKEN') ?: null,
+                'secret' => getenv('VK_SECRET') ?: null,
             ],
             'services' => [
                 'eventServiceUrl' => (getenv('EVENT_SERVICE_URL') ?: 'localhost:8100') . '/api/v1/',
             ],
             'logger' => [
-                'name' => 'event-service',
+                'name' => 'calendar-vkbot',
                 'path' => 'php://stdout',
                 'level' => Logger::DEBUG,
             ],

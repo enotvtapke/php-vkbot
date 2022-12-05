@@ -21,12 +21,12 @@ class VkApiService
         $this->logger = $logger;
     }
 
-    public function sendMessage(int $userId, string $message): void
+    public function sendMessage(int $userId, int $randomId, string $message): void
     {
         $this->logger->info("Sending message to user $userId: $message");
         $this->vkApi->messages()->send(
             $this->config->get('vk')['accessToken'],
-            ['peer_id' => $userId, 'user_id' => $userId, 'random_id' => mt_rand(), 'message' => $message]
+            ['peer_id' => $userId, 'user_id' => $userId, 'random_id' => $randomId, 'message' => $message]
         );
     }
 }

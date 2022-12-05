@@ -15,6 +15,8 @@ if (false) { // TODO Remove if
     $containerBuilder->enableCompilation(__DIR__ . '/../var/cache');
 }
 
+// TODO Opcache
+
 $dependencies = require __DIR__ . '/../app/dependencies.php';
 $dependencies($containerBuilder);
 

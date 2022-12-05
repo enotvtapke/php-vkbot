@@ -17,8 +17,12 @@ class ServerHandler extends VKCallbackApiServerHandler
     private EventService $eventService;
     private LoggerInterface $logger;
 
-    public function __construct(Config $config, VkApiService $vkApiService,
-                                EventService $eventService, LoggerInterface $logger)
+    public function __construct(
+        Config          $config,
+        VkApiService    $vkApiService,
+        EventService    $eventService,
+        LoggerInterface $logger
+    )
     {
         $this->config = $config;
         $this->vkApiService = $vkApiService;
@@ -29,7 +33,10 @@ class ServerHandler extends VKCallbackApiServerHandler
     public function confirmation(int $group_id, ?string $secret)
     {
         $this->logger->info("Server confirmation requested from group $group_id");
-        if ($secret !== $this->config->get('vk')['secret'] || $group_id !== $this->config->get('vk')['groupId']) {
+        if (
+            $secret !== $this->config->get('vk')['secret'] ||
+            strval($group_id) !== $this->config->get('vk')['groupId']
+        ) {
             $this->logger->info("Secret key or group id is invalid");
             return;
         }
@@ -40,11 +47,17 @@ class ServerHandler extends VKCallbackApiServerHandler
     public function messageNew(int $group_id, ?string $secret, array $object)
     {
         $this->logger->info("New message from group $group_id: " . json_encode($object));
-        if ($secret !== $this->config->get('vk')['secret'] || $group_id !== $this->config->get('vk')['groupId']) {
+        if (
+            $secret !== $this->config->get('vk')['secret'] ||
+            strval($group_id) !== $this->config->get('vk')['groupId']
+        ) {
             $this->logger->info("Secret key or group id is invalid");
             return;
         }
-        echo $this->eventService->findAll();
-        $this->vkApiService->sendMessage($object['message']->user_id, $this->eventService->findAll());
+        $this->vkApiService->sendMessage(
+            $object['message']->from_id,
+            $object['message']->id,
+            $this->eventService->findAll()
+        );
     }
 }
