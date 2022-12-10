@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 use App\Controllers\ServerHandler;
 use DI\ContainerBuilder;
+use Psr\Log\LoggerInterface;
 
-require __DIR__ . '/../vendor/autoload.php';
+const PROJECT_ROOT = __DIR__ . '/../';
+const RESOURCES_ROOT = PROJECT_ROOT . 'resources/';
+require PROJECT_ROOT . 'vendor/autoload.php';
 
 $containerBuilder = new ContainerBuilder();
 $containerBuilder->useAutowiring(false);
@@ -22,5 +25,9 @@ $dependencies($containerBuilder);
 
 $container = $containerBuilder->build();
 
-$data = json_decode(file_get_contents('php://input'));
+$body = file_get_contents('php://input');
+$container->get(LoggerInterface::class)->info("Received request with body: $body");
+$data = json_decode($body);
 $container->get(ServerHandler::class)->parse($data);
+header("HTTP/1.1 200 OK");
+echo 'OK';

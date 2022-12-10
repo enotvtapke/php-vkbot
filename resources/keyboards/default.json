@@ -1,0 +1,23 @@
+{
+  "one_time": false,
+  "buttons": [
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "Find all events",
+          "payload": {"domain": "event", "method": "findAll"}
+        }
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "Find events in next 7 days",
+          "payload": {"domain": "event", "method": "findInNextDays", "args": {"days": 7}}
+        }
+      }
+    ]
+  ]
+}

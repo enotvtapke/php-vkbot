@@ -14,6 +14,7 @@ use Monolog\Logger;
 use Monolog\Processor\UidProcessor;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
+use Tebru\Gson\Gson;
 use VK\Client\VKApiClient;
 
 return function (ContainerBuilder $containerBuilder) {
@@ -54,8 +55,10 @@ return function (ContainerBuilder $containerBuilder) {
             $c->get(VKApiClient::class),
             $c->get(LoggerInterface::class),
         ),
+        Gson::class => fn(ContainerInterface $c) => Gson::builder()->build(),
         EventService::class => fn(ContainerInterface $c) => new ExternalEventService(
-            $c->get(Config::class)
+            $c->get(Config::class),
+            $c->get(Gson::class),
         ),
         ServerHandler::class => fn(ContainerInterface $c) => new ServerHandler(
             $c->get(Config::class),
